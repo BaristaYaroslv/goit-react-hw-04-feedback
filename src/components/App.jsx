@@ -4,7 +4,7 @@ import { FeedbackOptions } from "./FeedbackOptions/FeedbackOptions";
 import { Statistics } from "components/Statistics/Statistics";
 import { Notification } from './Notification/Notification';
 
-export function App() {
+const App = () => {
 
     const [good, setGood] = useState(0);
     const [neutral, setNeutral] = useState(0);
@@ -13,13 +13,13 @@ export function App() {
     const onLeaveFeedback = event => {
         switch (event.target.textContent) {
             case "good":
-                setGood(prevState => prevState + 1);
+                setGood(value => value + 1);
                 break;
             case "neutral":
-                setNeutral(prevState => prevState + 1);
+                setNeutral(value => value + 1);
                 break;
             case "bad":
-                setBad(prevState => prevState +1);
+                setBad(value => value + 1);
                 break;
             default:
                 return;
@@ -27,19 +27,20 @@ export function App() {
     };
 
     const total = good + neutral + bad;
-    const positivePercentage = Math.round(good/total *100);
+    const positivePercentage = Math.round(good / total * 100);
+    const buttonsFeedback = ['good', 'neutral', 'bad'];
 
     return (
         <>
             <Section name="feedback" title="Please, leave feedback &#128517;">
                 <FeedbackOptions 
-                    options={["good", "neutral", "bad"]}
+                    options={buttonsFeedback}
                     onLeaveFeedback={onLeaveFeedback}
                 />                
             </Section>
             <Section name="statistics" title="Statistics">
-                {total === 0 ?
-                    <Notification message="There is no feedback &#128521;" /> :
+                
+                    <Notification message="There is no feedback &#128521;" />
                     <Statistics 
                         good={good} 
                         neutral={neutral} 
@@ -47,11 +48,12 @@ export function App() {
                         total={total}
                         positivePercentage={positivePercentage}
                     />
-                }
+                
             </Section>
         </>
     );
 };
+export default App;
 // export class App extends Component {
 
 //     static defaultProps = {
